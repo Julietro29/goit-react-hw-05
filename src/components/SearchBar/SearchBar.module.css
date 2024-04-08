@@ -1,62 +1,38 @@
-.header {
-    padding-top: 16px;
-    padding-bottom: 16px;
-    background-color: var(--accent-color);
+.searchForm {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    gap: 2px;
 }
 
-.form {
-    width: 300px;
-    position: relative;
-    text-align: center;
-}
-
-.input {
-    border: none;
-    padding-left: 36px;
-    padding-top: 12px;
-    padding-bottom: 12px;
-    padding-right: 12px;
-    color: var(--secondary-color);
-    border-radius: 12px;
-    width: 75%;
-    font-family: inherit;
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 1.2;
-    text-align: left;
+.searchInput {
+    padding: 4px 8px;
+    border: 1px solid #ccc;
     outline: none;
-    margin: 0 auto;
-}
-
-.input::placeholder {
-    color: var(--accent-color);
-    font-family: inherit;
+    border-radius: 5px;
     font-size: 16px;
-    font-weight: 400;
-    line-height: 1.2;
-    text-align: left;
+    transition: all 0.25s ease;
 }
 
-.icon {
-    color: var(--accent-color);
-    width: 20px;
-    height: 20px;
+.searchInput:hover,
+.searchInput:focus,
+.searchInput:active {
+    border: 1px solid #111;
 }
 
-.button {
-    border: none;
-    position: absolute;
-    background-color: inherit;
-    left: 12px;
-    top: 55%;
-    transform: translateY(-50%);
-    padding-left: 10px;
+.searchBtn {
+    display: inline-flex;
+    gap: 4px;
+    justify-content: center;
+    align-items: center;
+    padding: 4px 8px;
+    border: 1px solid #ccc;
+    outline: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.25s ease;
 }
 
-.toaster {
-    background-color: #e67373;
-    color: var(--primary-color);
+.searchBtn:hover,
+.searchBtn:focus {
+    border: 1px solid #111;
 }

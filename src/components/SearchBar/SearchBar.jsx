@@ -1,45 +1,42 @@
-import { Toaster } from 'react-hot-toast';
-import { HiOutlineSearch } from 'react-icons/hi';
+import PropTypes from 'prop-types';
+import { useState, useEffect, useRef } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { HiSearch } from 'react-icons/hi';
+import css from './SearchBar.module.css';
 
-import { errNotify } from '../../notifications/error';
-import { ERR_EMPTY_SEARCH } from '../../notifications/constants';
+const SearchBar = ({ handleSearch }) => {
 
-import styles from './SearchBar.module.css';
-
-export const SearchBar = ({ onSearch }) => {
-  const handleSubmit = evt => {
-    evt.preventDefault();
-    const form = evt.target;
-    console.log(form);
-    const searchStr = form.elements.search.value;
-    console.log('searchStr', searchStr);
-    if (searchStr.trim() === '') {
-      errNotify(ERR_EMPTY_SEARCH);
-      return;
+    const [ searchParams ] = useSearchParams();
+    const query = searchParams.get("query");
+    const [value, setValue] = useState(query ? query : "");
+    const searchBtn = useRef();
+    
+    const checkValue = (event) => {
+        const inpuValue = event.target.value.trim();
+        setValue(inpuValue);
     }
-    onSearch(searchStr);
-    form.reset();
-  };
+
+    useEffect(() => {
+        searchBtn.current.disabled = value === "" ? true : false;
+    }, [value])
+
 
   return (
-    <header className={styles.header}>
-      <form className={styles.form} onSubmit={handleSubmit}>
-        <div>
-          <input
-            className={styles.input}
-            type="text"
-            name="search"
-            autoComplete="off"
-            autoFocus
-            placeholder="Search images and photos"
-          />
-          <Toaster />
-        </div>
+    <form onSubmit={handleSearch} className={css.searchForm}>
+    <input
+      className={css.searchInput}
+      type="text"
+      name="query"
+      value={value}
+      onChange={checkValue}
+    />
+    <button className={css.searchBtn} type="submit" ref={searchBtn}><HiSearch /> Search</button>
+    </form>
+  )
+}
 
-        <button className={styles.button} type="submit">
-          <HiOutlineSearch />
-        </button>
-      </form>
-    </header>
-  );
-};
+SearchBar.propTypes = {
+  handleSearch: PropTypes.func.isRequired,
+}
+
+export default SearchBar;

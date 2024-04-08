@@ -1,0 +1,34 @@
+.movieBaseInfo {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: flex-start;
+}
+
+.moviePoster {
+    max-width: 500px;
+}
+
+.movieImg {
+    width: 250px;
+}
+
+.movieTitle {
+    margin-top: 0;
+}
+
+@media screen and (min-width: 768px) {
+    .movieBaseInfo {
+        flex-wrap: nowrap;
+    }
+
+    .movieImg {
+        width: 300px;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .movieImg {
+        width: 450px;
+    }
+}

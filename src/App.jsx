@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import clsx from 'clsx';
 import Modal from 'react-modal';
 
-import { SearchBar } from './SearchBar/SearchBar';
-import { ErrorMessage } from './ErrorMessage/ErrorMessage';
-import { ImageGallery } from './ImageGallery/ImageGallery';
-import { Loader } from './Loader/Loader';
-import { LoadMoreBtn } from './LoadMoreBtn/LoadMoreBtn';
-import { ImageModal } from './ImageModal/ImageModal';
+import { SearchBar } from './components/SearchBar/SearchBar';
+import { ErrorMessage } from './components/MovieCast/MovieCast';
+import { ImageGallery } from './components/MovieList/ImageGallery';
+import { Loader } from './components/Loader/Loader';
+import { LoadMoreBtn } from './components/Navigation/Navigation';
+import { ImageModal } from './components/MovieReviews/MovieReviews';
 
-import { fetchData } from '../api/fetch-data';
+import { fetchData } from './components/api/themoviedb';
 import styles from './App.module.css';
 
 const App = () => {
