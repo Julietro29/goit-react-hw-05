@@ -10,7 +10,7 @@
 }
 
 .movieImg {
-    width: 250px;
+    width: 200px;
 }
 
 .movieTitle {
@@ -29,6 +29,6 @@
 
 @media screen and (min-width: 1024px) {
     .movieImg {
-        width: 450px;
+        width: 350px;
     }
 }

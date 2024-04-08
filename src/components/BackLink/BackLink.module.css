@@ -7,15 +7,17 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     background: #e7e7e7;
-    color: #111;
+    color: #506266;
     text-decoration: none;
     transition: all 0.25s ease;
     margin-bottom: 16px;
+    margin-top: 6px;
+    margin-left: 6px;
 }
 
 .backlLink:hover,
 .backlLink:focus,
 .backlLink:active {
     border: 1px solid #111;
-    color: #000;
+    color: #249ad5;
 }

@@ -7,10 +7,8 @@ import Loader from "../Loader/Loader";
 import css from './MovieCast.module.css';
 
 const MovieCast = () => {
-
   const [castData, setCastData] = useState([]);
   const { movieId } = useParams();
-  
   const params = {
       language: 'en-US',
       include_adult: false
