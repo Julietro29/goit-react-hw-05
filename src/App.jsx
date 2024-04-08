@@ -1,88 +1,37 @@
-import { useEffect, useState } from "react";
-import clsx from 'clsx';
-import Modal from 'react-modal';
+import { Routes, Route } from 'react-router-dom'
+import { Suspense, lazy } from 'react'
+import NotFoundPage from './pages/NotFoundPage.jsx'
+import './App.module.css'
+import Navigation from './components/Navigation/Navigation.jsx'
+import Loader from './components/Loader/Loader';
 
-import { SearchBar } from './components/SearchBar/SearchBar';
-import { ErrorMessage } from './components/MovieCast/MovieCast';
-import { ImageGallery } from './components/MovieList/ImageGallery';
-import { Loader } from './components/Loader/Loader';
-import { LoadMoreBtn } from './components/Navigation/Navigation';
-import { ImageModal } from './components/MovieReviews/MovieReviews';
+const HomePage = lazy(() => import('./pages/HomePage.jsx'));
+const MoviesPage = lazy(() => import('./pages/MoviesPage.jsx'));
+const MovieDetailsPage = lazy(() => import('./pages/MovieDetailsPage.jsx'));
+const MovieCast = lazy(() => import('./components/MovieCast/MovieCast'));
+const MovieReviews = lazy(() => import('./components/MovieReviews/MovieReviews'));
 
-import { fetchData } from './components/api/themoviedb';
-import styles from './App.module.css';
-
-const App = () => {
-  const [items, setItems] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
-  const [currPage, setCurrPage] = useState(0);
-  const [hasMorePages, setHasMorePages] = useState(false);
-  const [filter, setFilter] = useState('');
-
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-
-  useEffect(() => {
-    Modal.setAppElement('#root');
-  }, []);
-
-  const updateImages = async (strFilter, page) => {
-    try {
-      setError(false);
-      setLoading(true);
-      const data = await fetchData(strFilter, page);
-      if (data.results.length > 0) {
-        setItems(prevItems => [...prevItems, ...data.results]);
-        setCurrPage(page);
-        setHasMorePages(page >= data.total_pages ? false : true);
-      } else {
-        setError(true);
-        setHasMorePages(false);
-      }
-    } catch (error) {
-      setError(true);
-      setHasMorePages(false);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleSearch = strFilter => {
-    setFilter(strFilter);
-    setItems([]);
-    setCurrPage(0);
-    setHasMorePages(false);
-    updateImages(strFilter, 1);
-  };
-
-  const handleMore = () => updateImages(filter, currPage + 1);
-  const openModal = image => {
-    setSelectedImage(image);
-    setModalIsOpen(true);
-  };
-  const closeModal = () => {
-    setModalIsOpen(false);
-  };
+function App() {
+  
   return (
-    <div className={styles.container}>
-      <SearchBar onSearch={handleSearch} />
-      <div className={clsx(styles.content, styles.section)}>
-        <ErrorMessage isError={error} />
-        <ImageGallery images={items} openModal={openModal} />
-        <Loader isLoading={loading} />
-        <LoadMoreBtn
-          isVisible={hasMorePages && !loading}
-          onClick={handleMore}
-        ></LoadMoreBtn>
-      </div>
-      <ImageModal
-        isOpen={modalIsOpen}
-        image={selectedImage}
-        onCloseClick={closeModal}
-      />
-    </div>
-  );
-};
+    <>
+      <Navigation />
 
-export default App;
+      <main className='main'>
+      <Suspense fallback={<Loader />}>
+      <Routes>
+        <Route path='/' element={<HomePage />} />
+        <Route path='/movies' element={<MoviesPage />} />
+        <Route path='/movies/:movieId' element={<MovieDetailsPage />}>
+          <Route path='cast' element={<MovieCast />} />
+          <Route path='reviews' element={<MovieReviews />} />
+        </Route>
+        <Route path='*' element={<NotFoundPage />} />
+      </Routes>
+      </Suspense>
+      </main>
+    </>
+  )
+}
+
+export default App
